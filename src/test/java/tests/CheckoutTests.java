@@ -206,13 +206,77 @@ public void checkProductDisplayTest() {
 
         // Создаем страницу корзины
         CartPage cart = new CartPage(driver, wait);
-
+        // перезагрузка страницы
+        driver.navigate().refresh();
 
         // Проверяем наличие товара
         Assert.assertTrue(cart.isBackpackDisplayed());
-
     }
 
+    // 8)Проверка сохранения содержимого корзины после переходов между страницами
+    @Test(description = "Товар сохраняется в корзине после перехода между страницами")
+
+    public void checkSafetyProductAfterPageTransitTest() {
+
+        // Логин
+        new LoginPage(driver, wait).login("standard_user", "secret_sauce");
+
+        // Создаем страницу товаров
+        InventoryPage inventory = new InventoryPage(driver, wait);
+
+        // Добавляем товар
+        inventory.addBackpackToCart();
+
+        // Переходим в корзину
+        inventory.openCart();
+
+        // Создаем страницу корзины
+        CartPage cart = new CartPage(driver, wait);
+
+        // переход между страницами
+        driver.navigate().back();
+        driver.navigate().forward();
+
+        // Проверяем наличие товара
+        Assert.assertTrue(cart.isBackpackDisplayed());
+    }
+
+// 9) Попытка перейти к Checkout с пустой корзиной
+@Test(description = "Не возмижно перейти к Checkout с пустой корзиной")
+
+public void checkToCheckoutWithEmptyCartTest() {
+
+    // Логин
+    new LoginPage(driver, wait).login("standard_user", "secret_sauce");
+
+    // Создаем страницу товаров
+    InventoryPage inventory = new InventoryPage(driver, wait);
+
+    // Переходим в корзину
+    inventory.openCart();
+
+    // Создаем страницу корзины
+    CartPage cart = new CartPage(driver, wait);
+
+    // Попытка оформить покупку
+    cart.checkout();
+
+    // Проверяем переход к началу покупки
+    Assert.assertFalse(driver.getCurrentUrl().contains("checkout-step-one"));
+}
+
+// 10) Прямой переход на Cart без авторизации
+
+
+
+    // // Проверяем что снова на странице товаров
+    //        Assert.assertTrue(driver.getCurrentUrl().contains("inventory"));
+// checkout()
+// checkout-step-one
+//	driver.get("URL"); — відкриває вказану вебсторінку.
+//	driver.navigate().back(); — повертає на попередню сторінку.
+// 	driver.navigate().forward(); — переходить на наступну сторінку.
+// 	driver.navigate().refresh(); — перезавантажує сторінку
 
 
 //  1) Добавление одного товара в корзину ******************************

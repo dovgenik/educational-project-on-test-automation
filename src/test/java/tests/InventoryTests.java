@@ -84,6 +84,19 @@ public class InventoryTests extends BaseTest {
 
     }
 
+// 10)Прямой переход на Cart без авторизации
+@Test(description = "Проверка, что без Logout нельзя попасть в корзину")
+
+public void withoutLoginCartTest() {
+
+    // Пытаемся попасть на страницу корзины
+    driver.get("https://www.saucedemo.com/cart.html");
+
+    // Проверяем, что нельзя попасть на страницу корзины
+    Assert.assertFalse(Objects.requireNonNull(driver.getCurrentUrl()).contains("cart"));
+}
+
+
     // 12  Проверка работы кнопки Back в браузере после выхода из системы
 
     @Test(description = "Проверка, что после Logout, используя работы кнопку Back, нельзя попасть на Inventory")
