@@ -74,7 +74,6 @@ public class CheckoutTests extends BaseTest {
         Assert.assertTrue(driver.getCurrentUrl().contains("inventory"));
     }
 
-
 // 3) Проверка, что товар реально отображается в корзине
 @Test(description = "Товар реально отображается в корзине")
 
@@ -265,21 +264,8 @@ public void checkToCheckoutWithEmptyCartTest() {
     Assert.assertFalse(driver.getCurrentUrl().contains("checkout-step-one"));
 }
 
-// 10) Прямой переход на Cart без авторизации
 
-
-
-    // // Проверяем что снова на странице товаров
-    //        Assert.assertTrue(driver.getCurrentUrl().contains("inventory"));
-// checkout()
-// checkout-step-one
-//	driver.get("URL"); — відкриває вказану вебсторінку.
-//	driver.navigate().back(); — повертає на попередню сторінку.
-// 	driver.navigate().forward(); — переходить на наступну сторінку.
-// 	driver.navigate().refresh(); — перезавантажує сторінку
-
-
-//  1) Добавление одного товара в корзину ******************************
+//  1) Добавление одного товара в корзину
 
     @Test(description = "Успешное добавление одного товара в корзину")
 
@@ -291,7 +277,7 @@ public void checkToCheckoutWithEmptyCartTest() {
         // Создаем страницу товаров
         InventoryPage inventory = new InventoryPage(driver, wait);
 
-        // Проверяем что товар не в корзине, если в корзине - возврат
+        // Проверяем что товар не в корзине, если в корзине - возврат на "прилавок"
         inventory.invBackpackToCart();
 
         // запоминаю количество товара в корзине
