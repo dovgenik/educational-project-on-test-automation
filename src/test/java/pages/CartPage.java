@@ -45,6 +45,7 @@ public class CartPage {
     public boolean isBackpackDisplayed(){
         Allure.step("Проверяем наличие Backpack в корзине");
         wait.until(ExpectedConditions.visibilityOfElementLocated(backpack));
+
         return driver.findElement(backpack).isDisplayed();
     }
 
@@ -100,5 +101,11 @@ public class CartPage {
         return driver.getPageSource().contains("Sauce Labs Bike Light");
 
     }
+
+    public boolean isBackpackPresent() {
+
+        return driver.getPageSource().contains("Sauce Labs Backpack");
+    }
+
 
 }

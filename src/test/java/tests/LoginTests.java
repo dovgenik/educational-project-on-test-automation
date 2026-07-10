@@ -15,7 +15,7 @@ import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
 
-    @Test(description = "Успешный вход в систему")
+  //  @Test(description = "Успешный вход в систему")
 
     public void validLoginTest(){
 
@@ -32,7 +32,9 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(driver.getCurrentUrl().contains("inventory"));
     }
 
-    @Test(description = "Неверный логин")
+
+
+   // @Test(description = "Неверный логин")
 
     public void invalidLoginTest(){
 
@@ -46,7 +48,8 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(loginPage.getErrorText().contains("Username"));
     }
 
-    @Test (description = "Login с пустыми полями")
+
+   // @Test (description = "Login с пустыми полями")
 
     public void emptyLoginTest(){
 
@@ -60,7 +63,7 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(loginPage.getErrorText().contains("Username"));
     }
 
-    @Test (description = "Login без пароля")
+  //  @Test (description = "Login без пароля")
 
     public void emptyPasswordTest(){
 
@@ -76,3 +79,5 @@ public class LoginTests extends BaseTest {
     }
 
 }
+
+

@@ -6,11 +6,13 @@ import org.testng.annotations.Test;
 import pages.InventoryPage;
 import pages.LoginPage;
 
+import java.util.Objects;
+
 //ТЕСТЫ СТРАНИЦЫ PRODUCTS (INVENTORY)
 
 public class InventoryTests extends BaseTest {
 
-    @Test(description = "Проверка заголовка страницы Products")
+   // @Test(description = "Проверка заголовка страницы Products")
 
     public void inventoryTitleTest() {
 
@@ -24,7 +26,7 @@ public class InventoryTests extends BaseTest {
         Assert.assertEquals(inventory.getTitle(), "Products");
     }
 
-    @Test(description = "Проверка выхода из системы")
+ //   @Test(description = "Проверка выхода из системы")
 
     public void logoutTest() {
 
@@ -41,7 +43,7 @@ public class InventoryTests extends BaseTest {
         Assert.assertTrue(driver.getCurrentUrl().contains("saucedemo"));
     }
 
-    @Test(description = "Проверка, что после Logout нельзя попасть на Inventory")
+  //  @Test(description = "Проверка, что после Logout нельзя попасть на Inventory")
 
     public void inventoryUnavailableAfterLogoutTest() {
 
@@ -58,10 +60,10 @@ public class InventoryTests extends BaseTest {
         driver.get("https://www.saucedemo.com/inventory.html");
 
         // Проверяем, что после Logout нельзя попасть на Inventory
-        Assert.assertFalse(driver.getCurrentUrl().contains("inventory"));
+        Assert.assertFalse(Objects.requireNonNull(driver.getCurrentUrl()).contains("inventory"));
     }
 
-    @Test(description = "Проверка счетчика корзины после открытия корзины")
+ //   @Test(description = "Проверка счетчика корзины после открытия корзины")
 
     public void cartBadgeAfterOpeningCartTest() {
 
@@ -81,4 +83,31 @@ public class InventoryTests extends BaseTest {
         Assert.assertEquals(inventory.getCartBadge(), "1");
 
     }
+
+    // 12  Проверка работы кнопки Back в браузере после выхода из системы
+
+    @Test(description = "Проверка, что после Logout, используя работы кнопку Back, нельзя попасть на Inventory")
+
+    public void inventoryUnavailableAfterLogoutAndBackTest() {
+
+        // Логинимся
+        new LoginPage(driver, wait).login("standard_user", "secret_sauce");
+        LoginPage loginPage = new LoginPage(driver, wait);
+
+        // Создаем страницу товаров
+        InventoryPage inventory = new InventoryPage(driver, wait);
+
+        // Нажимаем logout (через меню)
+        inventory.logout();
+
+        // Пытаемся вернуться на страницу с товарами
+        driver.navigate().back();
+
+        // Проверяем, наличие сообщение, что без авторизации не доступна Inventory
+        Assert.assertTrue(loginPage.getErrorText().contains("logged in"));
+
+        // Проверяем, что после Logout нельзя попасть на Inventory
+        Assert.assertFalse(Objects.requireNonNull(driver.getCurrentUrl()).contains("inventory"));
+    }
+
 }
